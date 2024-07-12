@@ -11,17 +11,14 @@ const userSchema = new Schema(
             trim: true,
             maxlength: 50,
         },
-        
         avatar: {
             type: String,
             required: false,
         },
-        
         imageIcon: {
             type: String,
             required: false,
         },
-
         email: {
             type: String,
             required: true,
@@ -36,7 +33,6 @@ const userSchema = new Schema(
                 message: 'Invalid Email',
             },
         },
-
         password: {
             type: String,
             required: true,
@@ -46,6 +42,10 @@ const userSchema = new Schema(
             type: String,
             enum: ['normal', 'good', 'top-good', 'best'],
             default: 'normal',
+        },
+        likes: {
+            type: [String],
+            default: [],
         },
     },
     {
@@ -59,7 +59,6 @@ const userSchema = new Schema(
 
 userSchema.statics.isEmailExisted = async function (email) {
     const user = await this.findOne({ email }).select('+password').lean();
-
     return { existed: Boolean(user), data: user };
 };
 
